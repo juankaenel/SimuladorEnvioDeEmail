@@ -1,7 +1,7 @@
 body {
     background: #43cea2;
-    background: -webkit-linear-gradient(to right, #185a9d, #43cea2);
-    background: linear-gradient(to right, #185a9d, #43cea2); 
+    background: -webkit-linear-gradient(to right, #000000, #43cea2);
+    background: linear-gradient(to right, #202122, #43cea2); 
 }
 #contenido {
     background-color: white;
@@ -19,7 +19,7 @@ header {
     text-align: center;
     color: white;
     font-size: 22px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Nunito', sans-serif;
     font-weight: 100;
 }
 form {
