@@ -27,19 +27,36 @@ function iniciarApp(){
 
 //Validar formulario
 function validarFormulario(e){
-    // console.log(e.target.value);
-    if(e.target.value.length > 0){
-        console.log('Si hay algo');
+    if(e.target.value.length > 0){ //campo no vacío 
+        //eliminamos el parrafo de error
+        const error = document.querySelector('p.error');
+        error.remove();
+        e.target.classList.add('border','border-green-500');
+        //eliminamos los errores
+        e.target.classList.remove('border','border-red-500'); //remuevo el borde rojo en caso q exista y agrego el verde
+      
     }
-    else{
+    else{ //campo vacío
         //e.target.style.borderBottomColor = 'red';
+        e.target.classList.remove('border','border-green-500');
         e.target.classList.add('border','border-red-500'); //le doy clases de tailwind cuando no hay nada en el input
         mostrarError('Todos los campos son obligatorios');
     }
+    //validación de email
     if(e.target.type==='email'){
-        const resultado = e.target.value.indexOf('@'); //retorna -1 cuando es false
-        if(resultado<0){
-            mostrarError('El email no es válido');
+        //const resultado = e.target.value.indexOf('@'); //retorna -1 cuando es false
+        const expReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
+        if(expReg.test( e.target.value )){
+            const error = document.querySelector('p.error');
+            error.remove();
+
+            e.target.classList.add('border','border-green-500');
+            e.target.classList.remove('border','border-red-500'); //remuevo el borde rojo en caso q exista y agrego el verde
+        }
+        else{
+            e.target.classList.remove('border','border-green-500');
+            e.target.classList.add('border','border-red-500'); //le doy clases de tailwind cuando no hay nada en el input
+            mostrarError('Email no válido');
         }
     }
 }
