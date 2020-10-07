@@ -1,11 +1,13 @@
 //Variables
 const btnEnviar = document.querySelector('#enviar');
+const formulario = document.querySelector('#enviar-mail');
+const resetBtn = document.querySelector('#resetBtn');
 
 //Variables para campos
 const email = document.querySelector('#email');
 const asunto = document.querySelector('#asunto');
 const mensaje = document.querySelector('#mensaje');
-const formulario = document.querySelector('#enviar-mail');
+
 //expresión regular
 const expReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
        
@@ -18,9 +20,16 @@ function eventListeners(){
     email.addEventListener('blur',validarFormulario); //blur se activa cuando estoy dentro del input y me salgo
     asunto.addEventListener('blur',validarFormulario); 
     mensaje.addEventListener('blur',validarFormulario); 
+
+    //botón para reiniciar el form
+    resetBtn.addEventListener('click', resetearFormulario);
+
+    //botón enviar
+    formulario.addEventListener('submit',enviarEmail);
+   
 }
 
-//Funciones
+//----------- Funciones -----------
 function iniciarApp(){
     btnEnviar.disabled = true;
     btnEnviar.classList.add('cursor-not-allowed', 'opacity-50');
@@ -79,6 +88,7 @@ function validarFormulario(e){
     }
 }
 
+//Control de errores
 function mostrarError(mensaje){
     const mensajeError = document.createElement('p');
     mensajeError.textContent = mensaje;
@@ -92,4 +102,38 @@ function mostrarError(mensaje){
     }
 
     
+}
+
+//Botón enviar
+function enviarEmail(e){
+    e.preventDefault();
+
+    //mostrar Spinner
+    const spinner = document.querySelector('#spinner');
+    spinner.style.display = 'flex';
+
+    //después de 3 segundos ocultamos el spinner y mostramos el msj
+    setTimeout(()=>{
+        spinner.style.display = 'none';
+
+        //mensaje
+        const parrafo = document.createElement('p');
+        parrafo.textContent = 'Mensaje enviado con éxito, pronto estaremos en contacto contigo. Para más información visitá -> www.devkoders.com';
+        parrafo.classList.add('text-center','my-10','p-2','bg-green-500','text-white','font-bold','upper-case');
+        //inserta el parrafo antes del spinner
+        formulario.insertBefore(parrafo, spinner);
+
+
+        setTimeout(()=>{
+            parrafo.remove();
+            resetearFormulario();
+            
+        },5000); //a los 5 segundos después de haber enviado el msj
+    },3000); //a los 3 segundos
+}
+
+//Función para resetear formulario
+function resetearFormulario(){
+    formulario.reset();
+    iniciarApp(); 
 }
